@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+#*
+The server renders this HTML page in an end-user's browser 
+to prompt for email address during username recovery.
+
+Velocity variables (identified by the $ character) are generated
+at runtime by the server.
+
+Change text or formatting as needed. Modifying Velocity statements
+is not recommended as it may interfere with expected server behavior.
+*#
+
+<!-- template name: username.recovery.template.html -->
+
+#set( $messageKeyPrefix = "username.recovery.template." )
+
+<html lang="$pluginLocale.getLanguage()" dir="ltr">
+<head>
+    <title>$pluginTemplateMessages.getMessage($messageKeyPrefix, "title")</title>
+    <base href="$CurrentPingFedBaseURL"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css"/>
+    #if($captchaEnabled)
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    #end
+    <style>
+        .circleInput:focus {
+            color: #000 !important;
+            background-color: #fff !important;
+            border-color: #ff6fc1 !important;
+            outline: 0 !important;
+            box-shadow: 0 0 0 .2rem rgba(238,0,136,.25) !important;
+        }
+        .buttonParent{
+            min-width: 100% !important;
+        }
+
+        .myProfileContainer, .profileSelectionParent{
+            margin-left: auto; 
+            margin-right: auto;
+            max-width: 790px;
+            padding: 0px 50px 0px 50px;
+        }
+
+        .profileRow{
+            display: flex;
+            flex-direction:row;
+            justify-content: space-between;
+
+        }
+
+        .profileCard {
+            flex: 1 1 0px;
+            border: 2px solid black;
+            max-width: 22%;
+            height: 150px;
+        }
+        @media (max-width: 800px) {
+            .buttonOutline, .pingButtonParent, .buttonPrimary {
+                min-width: calc(100% - 70px) !important;
+            }            
+            
+        }
+
+        .labelPing{
+            color:#000 !important;
+            font-weight: 700 !important;
+            font-size: 1.125rem !important;
+            text-transform: none !important;
+        }
+
+        .buttonOutline {
+            background: none !important;
+            border: 1px solid #e08 !important;
+            color: #000 !important;
+        }
+
+        .buttonOutline :hover {
+            background: #c27 !important;
+        }
+
+        .buttonPrimary {
+            background: #e08 !important;
+            color: white !important;
+            height: 16px !important;
+            padding: 1.6875rem 3.0375rem !important;
+            font-size: 1rem !important;
+            line-height: 1 !important;
+            border-radius: 5em !important;
+        }
+
+        .buttonPrimary :hover {
+            background: #c27 !important;
+        }
+
+        .buttonOutline, .buttonPrimary, .textButton {
+            text-transform: uppercase !important;
+            font-weight: 600 !important;
+            letter-spacing: 2px;
+        }
+
+        .textButton {
+            color:  #000 !important;
+            font-size: 12px;
+            text-decoration: underline;
+            text-decoration-color: #e08;
+        }
+        .textButton :hover{
+            color:  #e08 !important;
+            text-decoration: underline;
+            text-decoration-color: #e08 !important;
+        }
+
+        .circleInput{
+            border-radius: 60px !important;
+            display: block !important;
+            width: 100% !important;
+            height: calc(1.2em + 2.25rem) !important;
+            padding: 1.125rem 1.5rem !important;
+            font-size: 1.25rem !important;
+            font-weight: 300 !important;
+            line-height: 1.2 !important;
+            color: #000 !important;
+            background-color: #fff !important;
+            background-clip: padding-box !important;
+            border: 1px solid #bbbccc !important;
+            border-radius: 35px !important;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);        }
+
+        /* .inputParent ::before{
+            display: none !important;
+        } */
+        .required::before {
+            display: none !important;
+        }
+        .ping-container {
+            background-color: #fff !important;
+            color: #fff !important;
+        }
+        body {
+            background-color: #fff !important;
+            color: #fff !important;
+
+        }
+        .ping-container {
+            background-color: #fff !important;
+            color: #fff !important;
+        }
+
+        .ping-header {
+	-webkit-box-shadow: none !important; 
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	}
+    .ping-body-container {
+	-webkit-box-shadow: none !important; 
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	}
+</style>
+</head>
+
+<body onload="setFocus()">
+    
+<div class="ping-container ping-signin forgot-password">
+
+    <div class="ping-header">
+        $pluginTemplateMessages.getMessage($messageKeyPrefix, "title")
+    </div>
+    ## .ping-header **
+    
+    <div class="ping-body-container">
+        
+        <div>
+            <form method="POST" id="pf-form" action="" autocomplete="off">
+                <input class="circleInput" type="hidden" name="cSRFToken" value="$cSRFToken"/>
+                
+                <div class="ping-messages">
+                    #if($errorMessageKey)
+                        <div class="ping-error">$pluginTemplateMessages.getMessage($messageKeyPrefix, $errorMessageKey)</div>
+                    #end
+
+                    ## Uncomment below to display any additional server error:
+                    #*
+                    #if($serverError)
+                        <div class="ping-error">$serverError</div>
+                    #end
+                    *#
+                </div>
+
+                <div class="ping-messages">
+                    <div>
+                        $pluginTemplateMessages.getMessage($messageKeyPrefix, "info")
+                    </div>
+                </div>
+                
+                <div class="ping-input-label">
+                    $pluginTemplateMessages.getMessage($messageKeyPrefix, "emailTitle")
+                </div>
+                <div class="ping-input-container">
+                    <input class="circleInput" id="savedReferrer" type="hidden" name="$returnInfoField" value="$returnInfo" />
+                    <input class="circleInput" id="email" type="email" size="36" name="$email" value="$savedEmail" autocorrect="off" autocapitalize="off" onKeyPress="return postOnReturn(event)" placeholder="$pluginTemplateMessages.getMessage($messageKeyPrefix, "emailTitle")" />
+                </div>
+                ## .ping-input-label **
+                
+                <div class="ping-buttons">
+                    <input class="circleInput" type="hidden" name="$ok" value=""/>
+                    <input class="circleInput" type="hidden" name="$cancel" value=""/>
+                    <input class="circleInput" type="hidden" name="$passwordReset" value=""/>
+
+                    <a href="#" onclick="postOk(); return false;" class="buttonPrimary ping-button normal allow" title="$pluginTemplateMessages.getMessage($messageKeyPrefix, "sendUsernameButton")">
+                        $pluginTemplateMessages.getMessage($messageKeyPrefix, "sendUsernameButton")
+                    </a>
+                    
+                    <div class="ping-input-link ping-pass-change">
+                        #if($supportsPasswordRecovery)
+                        <a href="#" onclick="postForgotPassword(); return false;" class="forgot-password" title="$pluginTemplateMessages.getMessage($messageKeyPrefix, "forgotPasswordLink")">
+                            $pluginTemplateMessages.getMessage($messageKeyPrefix, "forgotPasswordLink")
+                        </a>
+                        <span class="divider">|</span>
+                        #end
+                        <a href="#" onclick="postCancel(); return false;" class="forgot-password" title="$pluginTemplateMessages.getMessage($messageKeyPrefix, "requestLink")">
+                            $pluginTemplateMessages.getMessage($messageKeyPrefix, "requestLink")
+                        </a>
+                    </div>
+
+                </div>
+                ## .ping-input-link **
+
+                #if($captchaEnabled)
+                    <div id="recaptcha"
+                         class="g-recaptcha recaptcha"
+                         data-badge="bottomright"
+                         data-sitekey=$siteKey
+                         data-callback="submitForm"
+                         data-size="invisible"></div>
+                #end
+
+            </form>
+        </div>
+        ## .ping-body **
+        
+    </div>
+    ## .ping-body-container **
+    
+    <div class="ping-footer-container">
+        <div class="ping-footer">
+            <div class="ping-credits"></div>
+            <div class="ping-copyright">$templateMessages.getMessage("global.footerMessage")</div>
+        </div>
+        ## .ping-footer **
+    </div>
+    ## .ping-footer-container **
+    
+</div>## .ping-container **
+
+<script type="text/javascript">
+
+    function postOk() {
+        if ($captchaEnabled) {
+            grecaptcha.execute();
+        }
+        else {
+            submitForm()
+        }
+    }
+    function submitForm()
+    {
+        document.forms["pf-form"]['$ok'].value = 'clicked';
+        document.forms["pf-form"].submit();
+
+        if($captchaEnabled) {
+            grecaptcha.reset();
+        }
+    }
+    function postForgotPassword() {
+        var target = "$forgotPasswordUrl";
+        document.forms["pf-form"].action = target;
+        document.forms["pf-form"]['$passwordReset'].value = 'clicked';
+        document.forms["pf-form"].submit();
+    }
+    function postCancel() {
+        document.forms["pf-form"]['$cancel'].value = 'clicked';
+        document.forms["pf-form"].submit();
+    }
+    function postOnReturn(e) {
+        var keycode;
+        if (window.event) keycode = window.event.keyCode;
+        else if (e) keycode = e.which;
+        else return true;
+
+        if (keycode == 13) {
+        	postOk();
+            return false;
+        } else {
+            return true;
+        }
+    }
+    function setFocus() {
+        var platform = navigator.platform;
+        if (platform != null && platform.indexOf("iPhone") == -1) {
+            document.getElementById('email').focus();
+        }
+    }
+    function setMobile(mobile) {
+        var className = ' mobile',
+            hasClass = (bodyTag.className.indexOf(className) !== -1);
+
+        if(mobile && !hasClass) {
+            bodyTag.className += className;
+        } else if (!mobile && hasClass) {
+            bodyTag.className = bodyTag.className.replace(className, '');
+        }
+
+        ## Check if this is the PingOne Mobile App **
+        #if($HttpServletRequest.getHeader('X-Ping-Client-Version'))
+        if(mobile) {
+            bodyTag.className += ' embedded';
+        }
+        #end
+    }
+    function getScreenWidth() {
+        return (window.outerHeight) ? window.outerWidth : document.body.clientWidth;
+    }
+
+    var bodyTag = document.getElementsByTagName('body')[0],
+        width = getScreenWidth();
+
+    if(/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        setMobile(true);
+    } else {
+        setMobile((width <= 480));
+        window.onresize = function() {
+            width = getScreenWidth();
+            setMobile((width <= 480));
+        }
+    }
+</script>
+
+<script type="text/javascript" src=https://cdn.three.ie/three-assets/v3.0/js/three-lib.js></script>
+<script> ThreeNavigation.Config.StoreLocator = false; </script>
+
+</body>
+</html>
