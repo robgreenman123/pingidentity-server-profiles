@@ -284,11 +284,15 @@ is not recommended as it may interfere with expected server behavior.
                         #end
 
                         #if($supportsPasswordChange || $supportsPasswordReset || $supportsUsernameRecovery)
-                        <div class="ping-input-link ping-pass-change account-actions">
-                            <input class="circleInput" type="hidden" name="$passwordReset" value=""/>
-                            <a onclick="postForgotPassword();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "forgotPassword")</a>
+                        <div class="ping-input-link ping-pass-change account-actions"> 
+
+                            <span style=color:#000>Forgot your </span>
                             <input class="circleInput" type="hidden" name="$usernameRecovery" value=""/>
+                            
                             <a onclick="postRecoverUsername();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "recoverUsername")</a>
+                            <input class="circleInput" type="hidden" name="$passwordReset" value=""/>
+                            <span style=color:#000> or </span> 
+                            <a onclick="postForgotPassword();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "forgotPassword")</a>
                         </div>
                         #end
 
