@@ -468,14 +468,12 @@ is not recommended as it may interfere with expected server behavior.
                             <a class="textButton ping-button blue deny" href="javascript:void(0)" onclick="postCancel();"  class="ping-button blue deny" title="$templateMessages.getMessage($messageKeyPrefix, "cancelButtonTitle")">
                             $templateMessages.getMessage($messageKeyPrefix, "cancelButtonTitle")
                             </a>
-                        </div>
 
-                        <div class="account-actions ping-register">
-                            $templateMessages.getMessage($messageKeyPrefix, "accountAlreadyCreated")
-                            <a href="javascript:void(0)" onclick="postSignOn();" title="$templateMessages.getMessage($messageKeyPrefix, "login")">
+                            <a class="textButton ping-button blue deny" href="javascript:void(0)" onclick="postSignOn();" title="$templateMessages.getMessage($messageKeyPrefix, "login")">
                                 $templateMessages.getMessage($messageKeyPrefix, "login")
                             </a>
                         </div>
+
 
                 #if($altAuthSources.size() > 0 && $isLocalRegistration)
                     </div>
