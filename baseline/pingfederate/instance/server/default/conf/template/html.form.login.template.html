@@ -283,6 +283,15 @@ is not recommended as it may interfere with expected server behavior.
                             </label>
                         #end
 
+                        #if($supportsPasswordChange || $supportsPasswordReset || $supportsUsernameRecovery)
+                        <div class="ping-input-link ping-pass-change account-actions">
+                            <input class="circleInput" type="hidden" name="$passwordReset" value=""/>
+                            <a onclick="postForgotPassword();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "forgotPassword")</a>
+                            <input class="circleInput" type="hidden" name="$usernameRecovery" value=""/>
+                            <a onclick="postRecoverUsername();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "recoverUsername")</a>
+                        </div>
+                        #end
+
                         <div class="ping-buttons">
                             <input class="circleInput" type="hidden" name="$ok" value="" />
                             <input class="circleInput" type="hidden" name="$cancel" value="" />
@@ -293,28 +302,14 @@ is not recommended as it may interfere with expected server behavior.
                             </span>
                         </div><!-- .ping-buttons -->
 
-                        #if($supportsPasswordChange || $supportsPasswordReset || $supportsUsernameRecovery)
-                        <div class="ping-input-link ping-pass-change account-actions">
-                            #if($supportsPasswordChange)
-                            <a href="$changePasswordUrl" class="password-change">$templateMessages.getMessage($messageKeyPrefix, "changePassword")</a>
-                            #end
-                            #if($supportsPasswordChange && ($supportsPasswordReset || $supportsUsernameRecovery))
-                            <span class="divider">|</span>
-                            #end
-                            #if($supportsPasswordReset)
-                            <input class="circleInput" type="hidden" name="$passwordReset" value=""/>
-                            <a onclick="postForgotPassword();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "forgotPassword")</a>
-                            #elseif($supportsUsernameRecovery)
-                            <input class="circleInput" type="hidden" name="$usernameRecovery" value=""/>
-                            <a onclick="postRecoverUsername();" class="forgot-password">$templateMessages.getMessage($messageKeyPrefix, "recoverUsername")</a>
-                            #end
-                        </div>
-                        #end
+
+
+                        
 
                         #if($registrationEnabled)
                         <div class="ping-register">
                             <input class="circleInput" type="hidden" name="$registrationValue" value=""/>
-                            $templateMessages.getMessage($messageKeyPrefix, "noAccountMessage") <a onclick="postRegistration();">$templateMessages.getMessage($messageKeyPrefix, "registerAccount")</a>
+                            <a class="textButton ping-button blue deny" onclick="postRegistration();">$templateMessages.getMessage($messageKeyPrefix, "registerAccount")</a>
                         </div>
                         #end
 
