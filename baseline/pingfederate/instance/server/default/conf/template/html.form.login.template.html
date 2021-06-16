@@ -189,7 +189,27 @@ is not recommended as it may interfere with expected server behavior.
         color: #000 !important;
     }
 	    
-	    
+	    /* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
 </style>
 </head>
 
@@ -256,12 +276,57 @@ is not recommended as it may interfere with expected server behavior.
                             $templateMessages.getMessage($messageKeyPrefix, "passwordTitle")
                         </div>
                         <div class="ping-input-container password-container">
-                            <input class="circleInput" id="password" type="password" size="36" name="$pass" onKeyPress="return postOnReturn(event)" />
-                            <div class="place-bottom type-alert tooltip-text" id="password-text">
+                            <input class="circleInput" id="password" class="required $validateRequired reveal" autocomplete="user-password" type="password" size="36" name="$pass" onkeyup="return postOnReturn(event)"/>
+                                #if($altAuthSources.size() > 0 && $isLocalRegistration)
+                                    <a id="reveal" class="password-show-button icon-view" onclick="revealPassword();"></a>
+                                #else
+                                    <a id="reveal" class="password-show-button icon-view full-field" onclick="revealPassword();"></a>
+                                #end
+                                <div class="place-bottom type-alert tooltip-text" id="password-text">
                                 <div class="icon">!</div>
                                 $templateMessages.getMessage($messageKeyPrefix, "missingField")
                             </div>
                         </div>
+
+                        <div class="ping-input-container">
+                            <div class="place-top type-requirements requirements tooltip-text open" id="password-requirements">
+
+                                <div class="requirements-text" id="message" style=display:none>
+                                    <div class="requirements-contain">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementsContain")
+                                    </div>
+                                    #if( $passwordRequirementOne && $passwordRequirementOne.trim() != "" )
+                                    <div id="length">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementOne")
+                                    </div>
+                                    #end
+                                    #if( $passwordRequirementTwo && $passwordRequirementTwo.trim() != "" )
+                                    <div id="capital">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementTwo")
+                                    </div>
+                                    #end
+                                    #if( $passwordRequirementThree && $passwordRequirementThree.trim() != "" )
+                                    <div id="letter">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementThree")
+                                    </div>
+                                    #end
+                                    #if( $passwordRequirementFour && $passwordRequirementFour.trim() != "" )
+                                    <div id="special">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementFour")
+                                    </div>
+                                    #end
+                                    #if( $passwordRequirementFour && $passwordRequirementFive.trim() != "" )
+                                    <div id="number">
+                                        $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementFive")
+                                    </div>
+                                    #end
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        
+                        
 
                         #if($enableRememberUsername)
                             <label class="remember-username">
@@ -361,6 +426,76 @@ is not recommended as it may interfere with expected server behavior.
 </div><!-- .ping-container -->
 
 <script type="text/javascript">
+
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+var special = document.getElementById("special");
+
+
+// When the user clicks on the password field, show the message box
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+// When the user clicks outside of the password field, hide the message box
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+// When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {  
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+  
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {  
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+// Validate special letters
+var specialCharacters = /[?=.*?[#?!@$%^&*-]/g;
+  if(myInput.value.match(specialCharacters)) {  
+    special.classList.remove("invalid");
+    special.classList.add("valid");
+  } else {
+    special.classList.remove("valid");
+    special.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {  
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+  
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
 
 	function postForgotPassword() {
 
@@ -508,6 +643,18 @@ is not recommended as it may interfere with expected server behavior.
     }
    
 
+    function revealPassword() {
+        var inputType = document.getElementById("password");
+
+        if (document.getElementById('password').type === 'password') {
+            inputType.setAttribute('type', 'text');
+            document.getElementById('reveal').className = 'password-show-button icon-view-hidden';
+        }
+        else {
+            inputType.setAttribute('type', 'password');
+            document.getElementById('reveal').className = 'password-show-button icon-view';
+        }
+    }
 
 </script>
 <script type="text/javascript" src=https://cdn.three.ie/three-assets/v3.0/js/three-lib.js></script>
