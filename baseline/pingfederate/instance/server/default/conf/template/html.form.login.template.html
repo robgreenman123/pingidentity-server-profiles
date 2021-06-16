@@ -295,31 +295,21 @@ is not recommended as it may interfere with expected server behavior.
                                     <div class="requirements-contain">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementsContain")
                                     </div>
-                                    #if( $passwordRequirementOne && $passwordRequirementOne.trim() != "" )
                                     <div id="length">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementOne")
                                     </div>
-                                    #end
-                                    #if( $passwordRequirementTwo && $passwordRequirementTwo.trim() != "" )
                                     <div id="capital">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementTwo")
                                     </div>
-                                    #end
-                                    #if( $passwordRequirementThree && $passwordRequirementThree.trim() != "" )
                                     <div id="letter">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementThree")
                                     </div>
-                                    #end
-                                    #if( $passwordRequirementFour && $passwordRequirementFour.trim() != "" )
                                     <div id="special">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementFour")
                                     </div>
-                                    #end
-                                    #if( $passwordRequirementFour && $passwordRequirementFive.trim() != "" )
                                     <div id="number">
                                         $templateMessages.getMessage($messageKeyPrefix, "passwordRequirementFive")
                                     </div>
-                                    #end
                                 </div>
                             </div>
                         </div>
