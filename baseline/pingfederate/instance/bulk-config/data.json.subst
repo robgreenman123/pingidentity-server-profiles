@@ -368,7 +368,6 @@
                     "testOnReturn": false,
                     "readTimeout": 3000,
                     "name": "CIAMOTHERSTORE",
-                    "retryFailedOperations": false,
                     "userDN": "cn=PingFederate,ou=bindusers,o=ciam"
                 },
                 {
@@ -400,7 +399,6 @@
                     "testOnReturn": false,
                     "readTimeout": 3000,
                     "name": "Ping Federate Token Store (cn=PingFederateSession,dc=tokenstore,dc=com)",
-                    "retryFailedOperations": false,
                     "userDN": "cn=PingFederateSession,dc=tokenstore,dc=com"
                 },
                 {
@@ -432,7 +430,6 @@
                     "testOnReturn": false,
                     "readTimeout": 3000,
                     "name": "${MEID_PF_USERSTORE}:389 (cn=PingFederate,ou=bindusers,o=ciam)",
-                    "retryFailedOperations": false,
                     "userDN": "cn=PingFederate,ou=bindusers,o=ciam",
                     "followLDAPReferrals": false
                 },
@@ -465,7 +462,6 @@
                     "testOnReturn": false,
                     "readTimeout": 3000,
                     "name": "Ping Federate Token Store (cn=PingFederate,dc=tokenstore,dc=com)",
-                    "retryFailedOperations": false,
                     "userDN": "cn=PingFederate,dc=tokenstore,dc=com"
                 },
                 {
@@ -497,7 +493,6 @@
                     "testOnReturn": false,
                     "readTimeout": 3000,
                     "name": "Ping Federate Token Store (cn=PingFederateClient,dc=tokenstore,dc=com)",
-                    "retryFailedOperations": false,
                     "userDN": "cn=PingFederateClient,dc=tokenstore,dc=com"
                 },
                 {
