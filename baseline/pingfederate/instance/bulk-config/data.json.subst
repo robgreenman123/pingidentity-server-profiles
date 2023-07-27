@@ -648,7 +648,6 @@
                     "certificateExpirations": {
                         "finalWarningPeriod": 7,
                         "emailAddress": "dw_096_itd-si-consumer-iam-all-team@mercedes-benz.com",
-                        "notificationMode": "NOTIFICATION_PUBLISHER",
                         "notificationPublisherRef": {
                             "location": "https://${MEID_K8S_PREFIX}pingfederate-admin:9999/pf-admin-api/v1/notificationPublishers/MailPublisher",
                             "id": "MailPublisher"
