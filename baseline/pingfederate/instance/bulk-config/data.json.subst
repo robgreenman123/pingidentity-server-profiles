@@ -1967,7 +1967,6 @@
                 "devicePollingInterval": 5,
                 "persistentGrantIdleTimeoutTimeUnit": "DAYS",
                 "userAuthorizationUrl": "https://${PF_ENGINE_PUBLIC_HOSTNAME}/api/v1/auth/device",
-                "dpopProofRequireNonce": false,
                 "userAuthorizationConsentAdapter": "${MEID_IDP_ADAPTER}",
                 "jwtSecuredAuthorizationResponseModeLifetime": 600,
                 "clientSecretRetentionPeriod": 0,
